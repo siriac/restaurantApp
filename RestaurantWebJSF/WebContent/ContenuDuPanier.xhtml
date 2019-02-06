@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:o="http://omnifaces.org/ui"
+xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://primefaces.org/ui">
+
+<h:head>
+<h:outputStylesheet name="css/bootstrap.css" />
+
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" />
+            <h:outputScript name="bootstrap/js/jquery.js" />
+<link rel="stylesheet" href="resources/css/jquery-ui.css"/>
+  <link rel="stylesheet" href="resources/css/style.css"/>
+  <script type="text/javascript" src="resources/js/jquery-1.js"></script>
+  <script type="text/javascript" src="resources/js/jquery-ui.js"></script>
+  <script type="text/javascript">
+  $( function() {
+    $( "#myform\\:datepicker" ).datepicker({
+      showOn: "button",
+      buttonImage: "resources/img//calendar.gif",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      dateFormat:'yy-mm-dd'
+    });
+  } );
+  $(function () {
+	  $(document).ready(function () {
+		  $('#qte').hide();
+		  $('#listePla').hide();
+		
+	})
+});
+  </script>
+<title>Contenu Du Panier</title>
+</h:head>
+<h:body>
+<h:form >
+ <h:dataTable id="listePlat" value="#{commandeMB.contenuPanier}" var="pr">
+<h:column>
+<f:facet name="header">
+<h:outputText value="Nom Plat" />
+</f:facet>
+<h:outputText value="#{pr.designation}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Prix du Plat" />
+</f:facet>
+<h:outputText value="#{pr.prix}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Region D'Origine" />
+</f:facet>
+<h:outputText value="#{pr.region.nomRegion}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Photo" />
+</f:facet>
+<o:graphicImage value="#{commandeMB.obtenirPhoto(pr.idProduit)}" dataURI="true"/>                
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Quantité Commandé" />
+</f:facet>
+<h:outputText value="#{pr.quantite}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Montant Total" />
+</f:facet>
+<h:outputText value="#{pr.prix}" />
+</h:column>
+</h:dataTable>
+</h:form>
+</h:body>
+</html>

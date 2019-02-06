@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:o="http://omnifaces.org/ui"
+xmlns:p="http://primefaces.org/ui"
+ xmlns:ui="http://primefaces.org/ui"
+ >
+      
+
+<h:head>
+  <h:outputStylesheet name="css/bootstrap.css" />
+<h:outputStylesheet name="css/resto.css"/>
+<h:outputStylesheet name="css/bootstrap.min.css"/>
+
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" />
+            <h:outputScript name="bootstrap/js/jquery.js" />
+            <h:outputScript name="bootstrap/js/resto.js"/>
+              
+<title>Accueil</title>
+</h:head>
+<h:body >
+<div class="container">
+<div class="page-header">
+<h1>Products</h1>
+<div style="float: right; cursor: pointer;">
+       <h:form id="cpt">
+ <h:commandLink action="#{commandeMB.gotoContenuPanier()}" class="btn btn-default btn-sm">
+ 		<span class="badge badge-notify my-cart-badge">
+ 		 <h:outputText id ="panier" value="#{commandeMB.totalPanier}"></h:outputText>
+ 				<span class="glyphicon glyphicon-shopping-cart my-cart-icon">
+ 				</span>
+ 		</span> 
+ </h:commandLink>
+ </h:form>
+      </div>
+</div>
+<h:form id="myform">
+  <h:outputText value="Choissir nom de la region"></h:outputText>
+<h:selectOneMenu id="idregion" value="#{commandeMB.nomRegion}">
+                <f:selectItems value="#{commandeMB.valeurTableauRegion}" var="r"
+                               itemLabel="#{r.nomRegion}" itemValue="#{r.nomRegion}" />
+ </h:selectOneMenu>
+ <h:commandButton action="#{commandeMB.Lancer}" value="ok" />
+</h:form>
+<div class="row">
+<ui:repeat value="#{commandeMB.listProduitByRegion}" var="pr">
+       <div class="col-md-3 text-center">
+       <h:form>
+       <o:graphicImage value="#{commandeMB.obtenirPhoto(pr.idProduit)}" dataURI="true"/><br />                
+       <h:outputText value="Nom Du Plat :#{pr.designation}" /><br/>
+       <h:outputText value="Prix:#{pr.prix}" />FCFA<br/>
+       <h:outputText value=" Origine Du Plat:#{pr.region.nomRegion}" /><br/>
+       
+       <h:commandButton class="btn btn-danger my-cart-btn" value="Ajouter Au panier" action="#{commandeMB.IncrementerTotalPanier(pr)}">
+        <f:ajax render=":cpt panier"/>
+       </h:commandButton>
+      <a href="#" class="btn btn-info alerte" onclick="alert('bonjour');">Details</a>
+      </h:form>
+       </div>
+        </ui:repeat>
+</div>
+</div>       
+</h:body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#MenuJSF.xhtml" PATH="/MenuJSF.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#MenuJSF.xhtml:0" NAME="item"
+   PATH="/MenuJSF.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="ContenuDuPanier2:#{commandeMB.gotoContenuPanier()}:#ContenuDuPanier2.xhtml"
+    NAME="output" PATH="/ContenuDuPanier2.xhtml"
+    TARGET="rules:#ContenuDuPanier2.xhtml"
+    TITLE="#{commandeMB.gotoContenuPanier()}:ContenuDuPanier2" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#ContenuDuPanier2.xhtml"
+  PATH="/ContenuDuPanier2.xhtml" SHAPE="256,289,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

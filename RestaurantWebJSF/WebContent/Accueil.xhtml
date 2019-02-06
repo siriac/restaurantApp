@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:o="http://omnifaces.org/ui"
+xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://primefaces.org/ui">
+
+<h:head>
+<h:outputStylesheet name="css/bootstrap.css" />
+
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" />
+            <h:outputScript name="bootstrap/js/jquery.js" />
+                        <h:outputScript name="js/jquery.mycart.js"/>
+            
+<link rel="stylesheet" href="resources/css/jquery-ui.css"/>
+  <link rel="stylesheet" href="resources/css/style.css"/>
+  <script type="text/javascript" src="resources/js/jquery-1.js"></script>
+  <script type="text/javascript" src="resources/js/jquery-ui.js"></script>
+<title>Accueil</title>
+</h:head>
+<h:body>
+<div >
+  <h:outputText value="Panier"></h:outputText>
+  <h:graphicImage></h:graphicImage>
+    <h:outputText id ="panier" value="#{commandeMB.totalPanier}"></h:outputText>
+  
+
+</div>
+  <h:form id="myform">
+  <h:outputText value="Choissir nom de la region"></h:outputText>
+<h:selectOneMenu id="idregion" value="#{commandeMB.nomRegion}">
+                <f:selectItems value="#{commandeMB.valeurTableauRegion}" var="r"
+                               itemLabel="#{r.nomRegion}" itemValue="#{r.nomRegion}" />
+ </h:selectOneMenu>
+ <h:commandButton action="#{commandeMB.Lancer}" value="ok" />
+</h:form>
+<h:form >
+ <h:dataTable id="listePlat" value="#{commandeMB.listProduitByRegion}" var="pr">
+<h:column>
+<f:facet name="header">
+<h:outputText value="Nom Plat" />
+</f:facet>
+<h:outputText value="#{pr.designation}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Prix du Plat" />
+</f:facet>
+<h:outputText value="#{pr.prix}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Region D'Origine" />
+</f:facet>
+<h:outputText value="#{pr.region.nomRegion}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Description Du Plat" />
+</f:facet>
+<h:outputText value="#{pr.description}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Photo" />
+</f:facet>
+<o:graphicImage value="#{commandeMB.obtenirPhoto(pr.idProduit)}" dataURI="true"/>                
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Ajouter Panier" />
+</f:facet>
+ <h:commandLink value="Ajouter">
+ <f:ajax render="panier" listener="#{commandeMB.IncrementerTotalPanier}"/>
+ </h:commandLink>
+</h:column>
+</h:dataTable>
+</h:form>
+<h:form>
+<h:commandLink value="Consulter son panier" action="ContenuDuPanier" />
+ 
+ </h:form>
+ <h:form id="form">
+ <p:dataTable id="checkboxDT" var="car" value="#{commandeMB.listProduitByRegion}" selection="#{commandeMB.selectedProduits}" rowKey="#{car.idProduit}" style="margin-bottom:0">
+        <f:facet name="header">
+            Checkbox
+        </f:facet>
+        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+        <p:column headerText="Id">
+            <h:outputText value="#{car.idProduit}" />
+        </p:column>
+        <p:column headerText="Nom Du Plat">
+            <h:outputText value="#{car.description}" />
+        </p:column>
+        <p:column headerText="Prix">
+            <h:outputText value="#{car.prix}" />
+        </p:column>
+        <p:column headerText="quantité">
+            <h:outputText value="#{car.quantite}" />
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton process="checkboxDT" update=":form:multiCarDetail" icon="ui-icon-search" value="View" oncomplete="PF('multiCarDialog').show()" />
+        </f:facet>
+    </p:dataTable>
+    <p:dialog header="Selected Cars" widgetVar="multiCarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="220">
+        <p:outputPanel id="multiCarDetail" style="text-align:center;">
+            <ui:repeat value="#{commandeMB.selectedProduits}" var="car">
+                <h:outputText value="#{car.idProduit} - #{car.description}" style="display:block"/>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog>
+    </h:form>
+    
+</h:body>
+</html>

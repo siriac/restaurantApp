@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:o="http://omnifaces.org/ui"
+xmlns:p="http://primefaces.org/ui"
+ xmlns:ui="http://primefaces.org/ui"
+ >
+      
+
+<h:head>
+<h:outputStylesheet name="css/resto.css"/>
+<h:outputStylesheet name="css/bootstrap.min.css"/>
+
+            <h:outputScript name="bootstrap/js/bootstrap.min.js" />
+            <h:outputScript name="bootstrap/js/jquery.js" />
+            <h:outputScript name="bootstrap/js/resto.js"/>
+            <h:outputScript name="js/jquery.mycart.js"/>
+              
+<title>Contenu Du Panier</title>
+</h:head>
+<h:body >
+ <div class="modal-content">
+ <div class="modal-header">
+ <button class="close" type="button"><span>X</span></button>
+ <h4>
+ <span class="glyphicon glyphicon-shopping-cart"></span>
+ My Cart
+ </h4>
+ </div>
+ <div class="modal-body">
+ <h:form >
+ <h:dataTable class="table table-hover table-responsive" value="#{commandeMB.contenuPanier}" var="pr" >
+<h:column>
+<f:facet name="header" >
+<h:outputText value="Nom Plat" />
+</f:facet>
+<h:outputText value="#{pr.p.designation}" class="text-center"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Prix du Plat" />
+</f:facet>
+<h:outputText value="#{pr.p.prix}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Region D'Origine" />
+</f:facet>
+<h:outputText value="#{pr.p.region.nomRegion}" />
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Photo" />
+</f:facet>
+<o:graphicImage value="#{commandeMB.obtenirPhoto(pr.p.idProduit)}" dataURI="true"/>                
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Quantité Commandé" />
+</f:facet>
+<div class="input-group" id="d">
+      <div class="input-group-btn" id="e">
+      <h:inputText value="#{pr.qte}" class="form-control" style="width:70px;" id="upd" />
+      <h:commandLink action="#{commandeMB.AjouterQuantite(pr)}" class="btn btn-default btn-sm" >
+                <span class="glyphicon glyphicon-plus-sign" ></span>
+           <f:ajax render=":d e upd mt mt-total-panier"/>    
+      </h:commandLink>
+      <h:commandLink action="#{commandeMB.DiminuerQuantite(pr)}" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-minus-sign" ></span>
+               <f:ajax render=":d e upd mt mt-total-panier"/> 
+      </h:commandLink>
+      </div>
+    </div>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Montant Total" />
+</f:facet>
+<h:outputText value="#{commandeMB.CalculTotalPrixUnitaire(pr)}" class="my-product-total" id ="mt"/>
+</h:column>
+<h:column>
+<f:facet name="header">
+<h:outputText value="Supprimer Ligne De Commande" />
+</f:facet>
+<h:commandButton action="#{commandeMB.SupprimerLigne(pr)}" value="X" class="btn btn-xs btn-danger my-product-remove"/>
+</h:column>
+<f:facet name="footer">
+<h:outputText value="montant total: #{commandeMB.Montant()}"  id="mt-total-panier"/>
+    </f:facet>
+</h:dataTable>
+</h:form>
+ </div>
+<div class="modal-footer">
+<h:commandButton action="#" value="Valider L'Achat" class="btn btn-primary my-cart-checkout"/>
+</div>
+ </div>
+</h:body>
+
+</html>
